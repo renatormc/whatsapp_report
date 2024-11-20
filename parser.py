@@ -56,8 +56,8 @@ def parse_body(text: str) -> Body:
     text = text.strip()
     res = re.search(r'([\x20-\x7E]+)\s+\(arquivo anexado\)(.*)', text, re.MULTILINE | re.DOTALL)
     if res:
-        return Body(filename=res.group(1), text=res.group(2), is_attachment=True, file_type=analyze_file_type(res.group(1)))
-    return Body(filename="", text=text, is_attachment=False)
+        return Body(filename=res.group(1), text=res.group(2).strip(), is_attachment=True, file_type=analyze_file_type(res.group(1)))
+    return Body(filename="", text=text.strip(), is_attachment=False)
 
 def extract_message(text: str, tf: TimestampFormat) -> Message:
     pattern1 = r'(rep)\s+-\s+(.{1,100}?):(.+)'.replace("rep", tf.pattern)
@@ -84,8 +84,9 @@ def extract_message(text: str, tf: TimestampFormat) -> Message:
 
 
 def extract_messages(text: str, tf: TimestampFormat) -> list[Message]:
-    pattern = r'(?=^rep - )'.replace("rep", tf.pattern)
-    parts = re.split(r'(?=\n\d{2}/\d{2}/\d{4} \d{2}:\d{2} - )', text)
+    # pattern = r'(?=^rep - )'.replace("rep", tf.pattern)
+    pattern = r'(?=\nrep - )'.replace("rep", tf.pattern)
+    parts = re.split(pattern, text)
     parts = [part.strip() for part in parts if part and part.strip()]
     return [extract_message(part, tf) for part in parts]
 

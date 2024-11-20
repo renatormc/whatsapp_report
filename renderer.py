@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Iterable
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-
+import config
 from parser import Message, TimestampFormat, extract_messages, get_list_participants
 
 
 env = Environment(
-    loader=FileSystemLoader("templates"),
+    loader=FileSystemLoader(config.APPDIR / "templates"),
     autoescape=select_autoescape()
 )
 

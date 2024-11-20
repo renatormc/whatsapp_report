@@ -12,7 +12,7 @@
             {% for message in messages %}
                 <div class="chat-bubble {% if message.sender == me %}sent{% else %}received{% endif %}">
                     <span class="sender">{{ message.sender }}</span>
-                    <p class="message">{{ message_body(message.body) }}</p>
+                    <div class="message">{{ message_body(message.body) }}</div>
                     <span class="timestamp">{{ message.timestamp|timestamp }}</span>
                 </div>
             {% endfor %}
