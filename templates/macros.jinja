@@ -1,0 +1,26 @@
+{% macro message_body(body) -%}
+    {% if body.is_attachment %}
+        <p class="att">
+            {% if body.file_type == 'audio' %}
+                <audio controls>
+                    <source src="{{ body.filename }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            {% elif body.file_type == 'image' %}
+                <a href="{{ body.filename }}">
+                    <img class="img-body" src="{{ body.filename }}" alt="">
+                </a>
+            {% elif body.file_type == 'video' %}
+                <video controls width="300" height="150">
+                    <source src="{{ body.filename }}" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>
+            {% else %}
+                <a href="{{ body.filename }}">{{ body.filename }}</a>
+            {% endif %}
+        </p>
+        <p>{{ body.text }}</p>
+    {% else %}
+        <p>{{ body.text }}</p>
+    {% endif %}
+{%- endmacro %}

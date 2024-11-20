@@ -1,0 +1,21 @@
+{% from 'macros.jinja' import message_body %}
+<!DOCTYPE html>
+<html lang="pt_BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat</title>
+        {% include "style.jinja" %}
+    </head>
+    <body>
+        <div class="chat-container">
+            {% for message in messages %}
+                <div class="chat-bubble {% if message.sender == me %}sent{% else %}received{% endif %}">
+                    <span class="sender">{{ message.sender }}</span>
+                    <p class="message">{{ message_body(message.body) }}</p>
+                    <span class="timestamp">{{ message.timestamp|timestamp }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
