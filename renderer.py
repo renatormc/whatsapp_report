@@ -36,4 +36,6 @@ def render_folder(folder: str, tf: TimestampFormat) -> None:
 
     messages = extract_messages(text, tf)
     participants = get_list_participants(messages)
-    render_chat(messages, txt_path.with_suffix(".html"), me=participants[0])
+    dest_file = txt_path.with_suffix(".html")
+    render_chat(messages, dest_file, me=participants[0])
+    print(f"Gerado arquivo \"{dest_file.absolute()}\"")
