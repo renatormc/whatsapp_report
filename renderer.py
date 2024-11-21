@@ -23,7 +23,7 @@ def render_chat(messages: Iterable[Message], dest: Path, me: str) -> None:
     dest.write_text(html, encoding="utf-8")
 
 
-def render(folder: str) -> None:
+def render_folder(folder: str) -> None:
     path = Path(folder)
     for entry in path.iterdir():
         if entry.name.startswith("Conversa do WhatsApp com") and entry.suffix == ".txt":
