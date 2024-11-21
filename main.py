@@ -1,6 +1,5 @@
 import argparse
 import os
-
 from renderer import render
 
 
@@ -9,7 +8,8 @@ parser.add_argument("--workkdir", "-w", default=".", help="Work dir")
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 
 p_render = subparsers.add_parser("render")
-p_render.add_argument("folder")
+p_render.add_argument("folder", default=".")
+
 
 args = parser.parse_args()
 os.chdir(args.workkdir)
