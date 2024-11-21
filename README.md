@@ -31,3 +31,8 @@ whatsapp_report.ps1 render "C:\temp\Conversa do WhatsApp com Fulano"
 ```
 
 Será gerado um arquivo html com o mesmo nome do arquivo txt na mesma pasta.
+
+# Como atualizar
+```powershell
+git pull origin master
+```
