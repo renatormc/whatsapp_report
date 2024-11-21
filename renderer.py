@@ -23,7 +23,7 @@ def render_chat(messages: Iterable[Message], dest: Path, me: str) -> None:
     dest.write_text(html, encoding="utf-8")
 
 
-def render_folder(folder: str) -> None:
+def render_folder(folder: str, tf: TimestampFormat) -> None:
     path = Path(folder)
     for entry in path.iterdir():
         if entry.name.startswith("Conversa do WhatsApp com") and entry.suffix == ".txt":
@@ -34,7 +34,6 @@ def render_folder(folder: str) -> None:
         return
     text = txt_path.read_text(encoding="utf-8")
 
-    tf = TimestampFormat(pattern=r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}', format="%d/%m/%Y %H:%M")
     messages = extract_messages(text, tf)
     participants = get_list_participants(messages)
     render_chat(messages, txt_path.with_suffix(".html"), me=participants[0])

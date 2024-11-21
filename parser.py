@@ -6,10 +6,19 @@ from typing import Literal
 
 FileType = Literal['audio', 'image', 'video', 'file']
 
+
 @dataclass
 class TimestampFormat:
     pattern: str
     format: str
+    example: str
+
+timestamp_options: list[TimestampFormat] = [
+     TimestampFormat(pattern=r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}', format="%d/%m/%Y %H:%M", example="02/01/2006 15:04"),
+     TimestampFormat(pattern=r'\d{2}/\d{2}/\d{2} \d{2}:\d{2}', format="%d/%m/%y %H:%M", example="02/01/06 15:04"),
+     TimestampFormat(pattern=r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}', format="%d/%m/%Y %H:%M:%S", example="02/01/2006 15:04:05"),
+     TimestampFormat(pattern=r'\d{2}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}', format="%d/%m/%y %H:%M:%S", example="02/01/06 15:04:05"),
+]
 
 
 @dataclass
@@ -84,8 +93,7 @@ def extract_message(text: str, tf: TimestampFormat) -> Message:
 
 
 def extract_messages(text: str, tf: TimestampFormat) -> list[Message]:
-    # pattern = r'(?=^rep - )'.replace("rep", tf.pattern)
-    pattern = r'(?=\nrep - )'.replace("rep", tf.pattern)
+    pattern = r'(?=\nrep\s+-\s+)'.replace("rep", tf.pattern)
     parts = re.split(pattern, text)
     parts = [part.strip() for part in parts if part and part.strip()]
     return [extract_message(part, tf) for part in parts]
